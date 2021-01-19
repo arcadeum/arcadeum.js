@@ -38,7 +38,7 @@ describe('Account integration', () => {
       mainModuleUpgradable,
       guestModule,
       sequenceUtils
-    ] = await deployWalletContext(provider)
+    ] = await deployWalletContext(provider.getSigner())
 
     // Create fixed context obj
     context = {
