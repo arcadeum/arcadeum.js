@@ -10,13 +10,14 @@ export class MulticallExternalProvider implements ExternalProvider {
   }
 
   next = async (req: JsonRpcRequest, callback: JsonRpcResponseCallback) => {
-    const cb = this.provider.send ? this.provider.send : this.provider.sendAsync
-    cb(req, callback)
+    this.provider.send ? this.provider.send(req, callback) : this.provider.sendAsync(req, callback)
   }
 
   sendAsync = (request: JsonRpcRequest, callback: JsonRpcResponseCallback) => {
     this.multicall.handle(this.next, request, callback)
   }
 
-  send = this.sendAsync
+  send = (request: JsonRpcRequest, callback: JsonRpcResponseCallback) => {
+    this.multicall.handle(this.next, request, callback)
+  }
 }
